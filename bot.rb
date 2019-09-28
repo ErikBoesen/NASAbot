@@ -11,7 +11,7 @@ POST_HTTP.use_ssl = true
 POST_HTTP.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
 def get_image(query)
-  uri = URI("https://api.nasa.gov/planetary/apod?api_key=" + (ENV["APOD_KEY"] or "DEMO_KEY")
+  uri = URI("https://api.nasa.gov/planetary/apod?api_key=" + (ENV["APOD_KEY"] || "DEMO_KEY"))
   response = Net::HTTP.get(uri)
   return JSON.parse(response)
 end
@@ -22,8 +22,8 @@ def process(message)
   if message["sender_type"] == "user"
     if text.start_with?(PREFIX)
       image = get_image()
-      responses.push(["NASA Image of the Day " + image["data"] + "\n\n" + photo["explanation"],
-                      image["url"] or image["hdurl"]])
+      responses.push("NASA Image of the Day " + image["data"] + "\n\n" + photo["explanation"])
+      responses.push(image["url"] || image["hdurl"])
     end
   end
   return responses
