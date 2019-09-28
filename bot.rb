@@ -10,7 +10,7 @@ POST_HTTP = Net::HTTP.new(POST_URI.host, POST_URI.port)
 POST_HTTP.use_ssl = true
 POST_HTTP.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-def get_image(query)
+def get_image()
   uri = URI("https://api.nasa.gov/planetary/apod?api_key=" + (ENV["APOD_KEY"] || "DEMO_KEY"))
   response = Net::HTTP.get(uri)
   return JSON.parse(response)
