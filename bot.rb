@@ -22,7 +22,7 @@ def process(message)
   if message["sender_type"] == "user"
     if text.start_with?(PREFIX)
       image = get_image()
-      responses.push("NASA Image of the Day " + image["data"] + "\n\n" + photo["explanation"])
+      responses.push("NASA Image of the Day " + image["date"] + "\n\n" + image["explanation"])
       responses.push(image["url"] || image["hdurl"])
     end
   end
