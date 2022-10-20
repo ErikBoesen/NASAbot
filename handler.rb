@@ -1,14 +1,29 @@
-require "sinatra"
-require "mebots"
-require "json"
-require "net/http"
+require 'json'
+require 'mebots'
+require 'json'
+require 'net/http'
 
-PREFIX = "nasa"
-BOT = Bot.new("nasabot", ENV["BOT_TOKEN"])
-POST_URI = URI("https://api.groupme.com/v3/bots/post")
+PREFIX = 'nasa'
+BOT = Bot.new('nasabot', ENV['BOT_TOKEN'])
+POST_URI = URI('https://api.groupme.com/v3/bots/post')
 POST_HTTP = Net::HTTP.new(POST_URI.host, POST_URI.port)
 POST_HTTP.use_ssl = true
 POST_HTTP.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+def receive(event:, context:)
+  message = JSON.parse(request.body.read)
+  responses = process(message)
+  if responses
+    reply(responses, message["group_id"])
+  end
+  return {
+    statusCode: 200,
+    body: {
+      message: 'Message received',
+      input: event
+    }.to_json
+  }
+end
 
 def get_image()
   uri = URI("https://api.nasa.gov/planetary/apod?api_key=" + (ENV["APOD_KEY"] || "DEMO_KEY"))
@@ -41,17 +56,5 @@ def reply(message, group_id)
         text: message,
     }.to_json
     POST_HTTP.request(req)
-  end
-end
-
-get "/" do
-  "I'm NASAbot, a bot for GroupMe! View me on MeBots and add me to your chat <a href=\"http://mebots.co/bot/nasabot\">here</a>!"
-end
-
-post "/" do
-  message = JSON.parse(request.body.read)
-  responses = process(message)
-  if responses
-    reply(responses, message["group_id"])
   end
 end
