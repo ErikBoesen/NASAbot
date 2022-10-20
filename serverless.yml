@@ -11,3 +11,5 @@ functions:
       - http:
           path: receive
           method: post
+plugins:
+  - serverless-ruby-package

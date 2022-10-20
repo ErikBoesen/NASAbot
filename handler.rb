@@ -1,11 +1,11 @@
-require 'json'
-require 'mebots'
-require 'json'
-require 'net/http'
+require "json"
+require "mebots"
+require "json"
+require "net/http"
 
-PREFIX = 'nasa'
-BOT = Bot.new('nasabot', ENV['BOT_TOKEN'])
-POST_URI = URI('https://api.groupme.com/v3/bots/post')
+PREFIX = "nasa"
+BOT = Bot.new("nasabot", ENV["BOT_TOKEN"])
+POST_URI = URI("https://api.groupme.com/v3/bots/post")
 POST_HTTP = Net::HTTP.new(POST_URI.host, POST_URI.port)
 POST_HTTP.use_ssl = true
 POST_HTTP.verify_mode = OpenSSL::SSL::VERIFY_PEER
@@ -19,7 +19,7 @@ def receive(event:, context:)
   return {
     statusCode: 200,
     body: {
-      message: 'Message received',
+      message: "Message received",
       input: event
     }.to_json
   }
