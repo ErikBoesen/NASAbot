@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mebots (0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mebots
+
+BUNDLED WITH
+   2.1.4
