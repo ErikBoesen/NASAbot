@@ -12,7 +12,7 @@ POST_HTTP.use_ssl = true
 POST_HTTP.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
 def receive(event:, context:)
-  message = JSON.parse(request.body.read)
+  message = JSON.parse(event['body'])
   responses = process(message)
   if responses
     reply(responses, message["group_id"])
