@@ -1,3 +1,4 @@
+load "vendor/bundle/bundler/setup.rb"
 require "json"
 require "mebots"
 require "json"
