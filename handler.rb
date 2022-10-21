@@ -20,8 +20,7 @@ def receive(event:, context:)
   return {
     statusCode: 200,
     body: {
-      message: 'Message received',
-      input: event
+      message: 'Message received'
     }.to_json
   }
 end
