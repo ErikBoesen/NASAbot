@@ -1,4 +1,3 @@
-load 'vendor/bundle/bundler/setup.rb'
 require 'json'
 require 'net/http'
 
