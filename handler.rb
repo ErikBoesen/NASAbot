@@ -1,11 +1,8 @@
 load 'vendor/bundle/bundler/setup.rb'
 require 'json'
-require 'mebots'
-require 'json'
 require 'net/http'
 
 PREFIX = 'nasa'
-BOT = Bot.new('nasabot', ENV['BOT_TOKEN'])
 POST_URI = URI('https://api.groupme.com/v3/bots/post')
 POST_HTTP = Net::HTTP.new(POST_URI.host, POST_URI.port)
 POST_HTTP.use_ssl = true
@@ -15,7 +12,7 @@ def receive(event:, context:)
   message = JSON.parse(event['body'])
   responses = process(message)
   if responses
-    reply(responses, message['group_id'])
+    reply(responses, message['bot_id'])
   end
   return {
     statusCode: 200,
@@ -44,15 +41,15 @@ def process(message)
   return responses
 end
 
-def reply(message, group_id)
+def reply(message, bot_id)
   if message.kind_of?(Array)
     message.each { |item|
-      reply(item, group_id)
+      reply(item, bot_id)
     }
   else
     req = Net::HTTP::Post.new(POST_URI, 'Content-Type' => 'application/json')
     req.body = {
-        bot_id: BOT.instance(group_id).id,
+        bot_id: bot_id,
         text: message,
     }.to_json
     POST_HTTP.request(req)
